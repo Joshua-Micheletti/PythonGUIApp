@@ -1,7 +1,8 @@
 from tkinter import *
 from widgets import *
 from frames import *
-import tkinter.ttk as ttk
+from style import *
+from ttkthemes import ThemedTk
 
 window = None
 
@@ -12,7 +13,7 @@ def closeProgram(event):
 def main():
     global window
 
-    window = Tk()                           # create the window
+    window = ThemedTk()                     # create the window
     window.geometry("1280x720")             # "1280x720+offsetx+offsety"
     window.title("GUI App")                 # set the window name
     window.resizable(TRUE, TRUE)            # resizable width and height
@@ -22,6 +23,8 @@ def main():
     #window.attributes('-topmost', 1)       # window always on top
     window.iconphoto(False, PhotoImage(file = './data/icon.png')) # load the icon
     window.bind('<Escape>', closeProgram)   # bind the escape button to close the program
+
+    loadStyle(window)
 
     loadWidgets(loadFrames(window), window) # load the frames and the widgets
 

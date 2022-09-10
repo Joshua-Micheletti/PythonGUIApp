@@ -1,7 +1,5 @@
 from tkinter.ttk import *
 from tkinter import PhotoImage
-from tkinter import LEFT
-from tkinter import RIGHT
 from tkinter import StringVar
 from frames import *
 
@@ -24,19 +22,19 @@ def entryCallback(*args):
 
 def changeTheme(theme, window):
     print(theme)
-    style = Style(window)
-    style.theme_use(theme)
+    window.set_theme(theme)
 
 
 
 def loadWidgets(frames, window):
-    loadButtons(frames["buttons"])
+    loadButtons(frames["buttons"], window)
     loadCheckboxes(frames["checkboxes"])
     loadEntries(frames["entries"])
     loadStyles(frames["styles"], window)
+    loadLabels(frames["labels"])
 
 
-def loadButtons(frame):
+def loadButtons(frame, window):
     global widgets
     global downloadIcon
 
@@ -62,24 +60,27 @@ def loadButtons(frame):
     widgets["imageButton"] = imageButton
 
     # COMPOUND IMAGE + TEXT BUTTONS
+    compoundFrame = Frame(frame)
+    compoundFrame.pack()
+
     compoundButton = Button(
-        frame,
+        compoundFrame,
         image = downloadIcon,
         text = "Download",
-        compound = LEFT,
+        compound = "left",
         command = clickFunction
     )
-    compoundButton.pack(pady = 5)
+    compoundButton.grid(row = 0, column = 0, pady = 5, padx = 5)
     widgets["compoundButton"] = compoundButton
 
     compoundButtonRight = Button(
-        frame,
+        compoundFrame,
         image = downloadIcon,
         text = "Download",
-        compound = RIGHT,
+        compound = "right",
         command = clickFunction
     )
-    compoundButtonRight.pack(pady = 5)
+    compoundButtonRight.grid(row = 0, column = 1, pady = 5, padx = 5)
     widgets["compoundButtonRight"] = compoundButtonRight
 
     # BUTTON WITH CALLBACK ARGUMENTS
@@ -147,14 +148,36 @@ def loadEntries(frame):
 
 
 def loadStyles(frame, window):
-    style = Style(window)
+    row = 0
+    buttonsPerRow = 4
+    for i in range(len(window.get_themes())):
+        if (i % buttonsPerRow == 0):
+            row += 1
 
-    for i in range(len(style.theme_names())):
-        #theme = style.theme_names()[i]
         button = Button(
             frame,
-            text = style.theme_names()[i],
-            command = lambda theme = style.theme_names()[i], window = window: changeTheme(theme, window),
-        ).pack()
+            text = window.get_themes()[i],
+            command = lambda theme = window.get_themes()[i], window = window: changeTheme(theme, window),
+        ).grid(column = i % buttonsPerRow, row = row, padx = 5, pady = 5)
 
         widgets["styleButton" + str(i)] = button
+
+
+def loadLabels(frame):
+    global widgets
+
+    label = Label(
+        frame,
+        text = "Normal Label"
+    )
+
+    label.pack()
+    widgets["label"] = label
+
+    warningLabel = Label(
+        frame,
+        style = "Warning.TLabel",
+        text = "Warning"
+    )
+    warningLabel.pack()
+    widgets["warningLabel"] = warningLabel

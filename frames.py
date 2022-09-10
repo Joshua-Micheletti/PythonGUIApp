@@ -51,6 +51,16 @@ def loadFrames(window):
 
     frames["styles"] = styles
 
+    labels = LabelFrame(window)
+    labels["padding"] = (20, 20)
+    labels["relief"] = "sunken"
+    labels["cursor"] = "arrow"
+    labels["text"] = "Labels"
+    labels["labelanchor"] = "n"
+    labels.grid(column = 1, row = 1, sticky = "nsew")
+
+    frames["labels"] = labels
+
     return(frames)
 
     
