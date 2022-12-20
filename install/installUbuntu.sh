@@ -7,6 +7,6 @@ sudo apt install python3-tk
 pip install ttkthemes
 
 echo "#!/bin/bash" > ../launch.sh
-echo python3 app.py > ../launch.sh
+echo python3 ./src/app.py > ../launch.sh
 
 chmod +x ../launch.sh

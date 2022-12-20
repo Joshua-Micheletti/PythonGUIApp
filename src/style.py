@@ -14,5 +14,3 @@ def loadStyle(window):
     style.configure("TLabel",
         font = ("Arial", 30)
     )
-
-    #style.configure(".", font = ("Arial", 30))

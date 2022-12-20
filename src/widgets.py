@@ -2,10 +2,9 @@ from tkinter.ttk import *
 from tkinter import PhotoImage
 from tkinter import StringVar
 from frames import *
+from shared import *
 
-widgets = dict()
 downloadIcon = None
-strings = dict()
 
 def clickFunction():
     print("clicked!")
@@ -14,28 +13,31 @@ def clickFunctionWithArgs(args):
     print(args)
 
 def checked():
-    global strings
-    print("checked: " + strings["checkbox"].get())
+    print("checked: " + getStrings()["checkbox"].get())
 
 def entryCallback(*args):
-    print(strings[args[0]].get())
+    print(getStrings()[args[0]].get())
 
-def changeTheme(theme, window):
+def changeTheme(theme):
     print(theme)
-    window.set_theme(theme)
+    getWindow().set_theme(theme)
 
 
 
-def loadWidgets(frames, window):
-    loadButtons(frames["buttons"], window)
-    loadCheckboxes(frames["checkboxes"])
-    loadEntries(frames["entries"])
-    loadStyles(frames["styles"], window)
-    loadLabels(frames["labels"])
+def loadWidgets(frames):
+    if "buttons" in frames:
+        loadButtons(frames["buttons"])
+    if "checkboxes" in frames:
+        loadCheckboxes(frames["checkboxes"])
+    if "entries" in frames:
+        loadEntries(frames["entries"])
+    if "styles" in frames:
+        loadStyles(frames["styles"])
+    if "labels" in frames:
+        loadLabels(frames["labels"])
 
 
-def loadButtons(frame, window):
-    global widgets
+def loadButtons(frame):
     global downloadIcon
 
     # NORMAL BUTTON
@@ -46,7 +48,7 @@ def loadButtons(frame, window):
     )
     button.state(["!disabled"])
     button.pack(pady = 5)
-    widgets["button"] = button
+    getWidgets()["button"] = button
 
     downloadIcon = PhotoImage(file = "./data/download.png")
 
@@ -57,7 +59,7 @@ def loadButtons(frame, window):
         command = clickFunction
     )
     imageButton.pack(pady = 5)
-    widgets["imageButton"] = imageButton
+    getWidgets()["imageButton"] = imageButton
 
     # COMPOUND IMAGE + TEXT BUTTONS
     compoundFrame = Frame(frame)
@@ -71,7 +73,7 @@ def loadButtons(frame, window):
         command = clickFunction
     )
     compoundButton.grid(row = 0, column = 0, pady = 5, padx = 5)
-    widgets["compoundButton"] = compoundButton
+    getWidgets()["compoundButton"] = compoundButton
 
     compoundButtonRight = Button(
         compoundFrame,
@@ -81,7 +83,7 @@ def loadButtons(frame, window):
         command = clickFunction
     )
     compoundButtonRight.grid(row = 0, column = 1, pady = 5, padx = 5)
-    widgets["compoundButtonRight"] = compoundButtonRight
+    getWidgets()["compoundButtonRight"] = compoundButtonRight
 
     # BUTTON WITH CALLBACK ARGUMENTS
     argumentButton = Button(
@@ -90,89 +92,81 @@ def loadButtons(frame, window):
         command = lambda: clickFunctionWithArgs("this string")
     )
     argumentButton.pack(pady = 5)
-    widgets["argumentButton"] = argumentButton
+    getWidgets()["argumentButton"] = argumentButton
 
 
 def loadCheckboxes(frame):
-    global strings
-    global widgets
-
-    strings["checkbox"] = StringVar(name = "checkbox")
+    getStrings()["checkbox"] = StringVar(name = "checkbox")
 
     checkbox = Checkbutton(
         frame,
         text = "Checkbox",
         command = checked,
-        variable = strings["checkbox"],
+        variable = getStrings()["checkbox"],
         onvalue = "True",
         offvalue = "False"
     )
     checkbox.pack()
-    widgets["checkbox"] = checkbox
+    getWidgets()["checkbox"] = checkbox
 
 
 def loadEntries(frame):
-    global widgets
-    global strings
-
     entryLabel = Label(
         frame,
         text = "Input"
     )
-    strings["entry"] = StringVar(name = "entry")
-    strings["entry"].trace('w', entryCallback)
+    getStrings()["entry"] = StringVar(name = "entry")
+    getStrings()["entry"].trace('w', entryCallback)
     entry = Entry(
         frame,
-        textvariable = strings["entry"],
+        textvariable = getStrings()["entry"],
     )
     entryLabel.pack()
     entry.pack(pady = (0, 5))
     entry.focus()
-    widgets["entry"] = entry
-    widgets["entryLabel"] = entryLabel
+    getWidgets()["entry"] = entry
+    getWidgets()["entryLabel"] = entryLabel
 
     passwordLabel = Label(
         frame,
         text = "Password"
     )
-    strings["password"] = StringVar(name = "password")
-    strings["password"].trace('w', entryCallback)
+    getStrings()["password"] = StringVar(name = "password")
+    getStrings()["password"].trace('w', entryCallback)
     password = Entry(
         frame,
-        textvariable = strings["password"],
+        textvariable = getStrings()["password"],
         show = '*'
     )
     passwordLabel.pack()
     password.pack(pady = (0, 5))
-    widgets["password"] = password
+    getWidgets()["password"] = password
 
 
-def loadStyles(frame, window):
+def loadStyles(frame):
     row = 0
     buttonsPerRow = 4
-    for i in range(len(window.get_themes())):
+    for i in range(len(getWindow().get_themes())):
         if (i % buttonsPerRow == 0):
             row += 1
 
         button = Button(
             frame,
-            text = window.get_themes()[i],
-            command = lambda theme = window.get_themes()[i], window = window: changeTheme(theme, window),
+            text = getWindow().get_themes()[i],
+            command = lambda theme = getWindow().get_themes()[i]: changeTheme(theme),
         ).grid(column = i % buttonsPerRow, row = row, padx = 5, pady = 5)
 
-        widgets["styleButton" + str(i)] = button
+        getWidgets()["styleButton" + str(i)] = button
 
 
 def loadLabels(frame):
-    global widgets
-
     label = Label(
         frame,
         text = "Normal Label"
     )
 
     label.pack()
-    widgets["label"] = label
+    getWidgets()["label"] = label
 
     warningLabel = Label(
         frame,
@@ -180,4 +174,4 @@ def loadLabels(frame):
         text = "Warning"
     )
     warningLabel.pack()
-    widgets["warningLabel"] = warningLabel
+    getWidgets()["warningLabel"] = warningLabel

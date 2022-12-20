@@ -1,3 +1,3 @@
 pip install ttkthemes
 
-echo python app.py > ..\launch.bat
+echo python ./src/app.py > ..\launch.bat

@@ -1,6 +1,7 @@
 from app import *
 from widgets import *
 from tkinter.ttk import *
+from shared import *
 
 def loadFrames(window):
     frames = dict()
@@ -9,6 +10,7 @@ def loadFrames(window):
     window.columnconfigure(1, weight = 2)
     window.columnconfigure(2, weight = 2)
     window.rowconfigure(0, weight = 0)
+    window.rowconfigure(1, weight = 0)
     #window.columnconfigure(3, weight = 2)
 
     buttons = LabelFrame(window)
