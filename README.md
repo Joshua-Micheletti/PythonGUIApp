@@ -1,4 +1,4 @@
-# Pytho GUI App
+# Python GUI App
 This is a structure to simplify the management of UIs created with tkinter.
 The project is devides the jobs of each part of the UI into its specific source files.
 
