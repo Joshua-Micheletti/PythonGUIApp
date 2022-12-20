@@ -16,7 +16,7 @@ In here you can change the behaviour of the main window or create new functions 
 By default, you can create a window by using the function "createWindow()".
 
 # Frames
-In here you can define the frames (similar to <div>) which will populate the window, and at the same time will be populated by specific widgets.
+In here you can define the frames (similar to '<'div'>') which will populate the window, and at the same time will be populated by specific widgets.
 By default, the sample program creates a frame through the function "loadFrames(window)". This function returns a dictionary of all the frames loaded in the window.
 
 # Widgets
