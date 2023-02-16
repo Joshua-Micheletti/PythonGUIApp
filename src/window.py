@@ -7,6 +7,9 @@ from style import *
 # function to call when the window gets closed
 def closeWindowCallback(event):
     getWindow().destroy()
+    
+def closeWindowWM():
+    getWindow().destroy()
 
 # function to create a window
 def createWindow(title = "GUI App", width = 1280, height = 720, offsetX = 0, offsetY = 0, resizeX = TRUE, resizeY = TRUE, minResizeX = 400, minResizeY = 400, maxResizeX = 1920, maxResizeY = 1080, alpha = 1, icon = ""):
@@ -24,6 +27,8 @@ def createWindow(title = "GUI App", width = 1280, height = 720, offsetX = 0, off
         window.iconphoto(False, PhotoImage(file = icon)) # load the icon
         
     window.bind('<Escape>', closeWindowCallback)   # bind the escape button to close the program
+    window.protocol("WM_DELETE_WINDOW", closeWindowWM)
+    
     loadStyle(window)
     setWindow(window)
 
