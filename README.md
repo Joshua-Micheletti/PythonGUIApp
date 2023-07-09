@@ -25,3 +25,9 @@ The association between frames and widgets is done by matching the name of the f
 
 # Style
 Here is where the window style gets loaded and set, through the use of the "loadStyle(window)" function.
+
+
+![alt text](https://github.com/Joshua-Micheletti/PythonGUIApp/blob/main/img/azure-dark.png?raw=true)
+![alt text](https://github.com/Joshua-Micheletti/PythonGUIApp/blob/main/img/sv_dark.png?raw=true)
+![alt text](https://github.com/Joshua-Micheletti/PythonGUIApp/blob/main/img/vista.png?raw=true)
+![alt text](https://github.com/Joshua-Micheletti/PythonGUIApp/blob/main/img/ubuntu.png?raw=true)
